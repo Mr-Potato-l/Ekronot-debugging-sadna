@@ -1,13 +1,18 @@
 #include "part1.h"
 #include <iostream>
 
-char* string_copy(char* dest, unsigned int destsize, char* src)
+char* string_copy(char* dest, unsigned int destsize, const char* src) 
 {
-	char* ret = dest;
-	while (*dest++ = *src++)
-		;
-	return ret;
+    char* ret = dest;
+    unsigned int i = 0;
+    while (i < destsize - 1 and (*dest++ = *src++)) 
+    {
+        i++;
+    }
+    *dest = '\0';
+    return ret;
 }
+
 
 void part1()
 {

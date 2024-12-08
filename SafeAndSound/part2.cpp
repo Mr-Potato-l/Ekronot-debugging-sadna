@@ -5,12 +5,11 @@
 char* safe_string_copy(char* dest, unsigned int destsize, char* src)
 {
 	unsigned int srcsize = (unsigned int)strlen(src);
-	if (srcsize >= destsize)
+	if (srcsize + 1 > destsize)
 		throw std::overflow_error("possible buffer overflow");
 
 	char* ret = dest;
-	for (unsigned int i = 0; i < srcsize * sizeof(*src); i++)
-		*dest++ = *src++;
+	while ((*dest++ = *src++));
 	return ret;
 }
 
@@ -22,8 +21,15 @@ void part2()
 	char dest[BUF_SIZE];
 	char src[] = "hello world!";
 
-	safe_string_copy(dest, BUF_SIZE, src);
+	try 
+	{
+		safe_string_copy(dest, BUF_SIZE, src);
 
-	std::cout << src << std::endl;
-	std::cout << dest << std::endl;
+		std::cout << "Source: " << src << std::endl;
+		std::cout << "Destination: " << dest << std::endl;
+	}
+	catch (const std::overflow_error& e) 
+	{
+		std::cerr << "Error: " << e.what() << std::endl;
+	}
 }
